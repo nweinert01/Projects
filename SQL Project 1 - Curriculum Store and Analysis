@@ -1,0 +1,103 @@
+--SQL Project--
+--Create a store--
+--Run Store Analysis--
+
+--Create a Store--
+CREATE TABLE curriculum_store (id INTEGER PRIMARY KEY, Curriculum_Name TEXT, Num_sold INTEGER, Content TEXT, Price INTEGER);
+
+INSERT INTO curriculum_store VALUES (1, "Big Bang", 17, "Science", 25.99);
+
+INSERT INTO curriculum_store VALUES (2, "Pay to Play", 25, "Math", 29.95);
+
+INSERT INTO curriculum_store VALUES (3, "Ready, Set, Read", 21, "Language Arts", 29.95);
+
+INSERT INTO curriculum_store VALUES (4, "World Wars", 13, "History", 32.75);
+
+INSERT INTO curriculum_store VALUES (5, "The Plant Life Cycle", 42, "Science", 19.95);
+
+INSERT INTO curriculum_store VALUES (6, "Everyday Fractions", 22, "Math", 25.99);
+
+INSERT INTO curriculum_store VALUES (7, "Dragon's Love Tacos", 36, "Language Arts", 22.25);
+
+INSERT INTO curriculum_store VALUES (8, "The Ten Commitments", 17, "Humanities", 12.75);
+
+INSERT INTO curriculum_store VALUES (9, "Grounding Techniques for Toddlers", 23, "Humanities", 12.75);
+
+INSERT INTO curriculum_store VALUES (10, "ABC in 123", 35, "Language Arts", 25.99);
+
+INSERT INTO curriculum_store VALUES (11, "The Weather Cycle", 28, "Science", 24.75);
+
+INSERT INTO curriculum_store VALUES (12, "Louisiana History", 44, "History", 25.99);
+
+INSERT INTO curriculum_store VALUES (13, "World Wins", 36, "History", 35.50);
+
+INSERT INTO curriculum_store VALUES (14, "Chess 4 Life", 73, "Language Arts", 27.74);
+
+INSERT INTO curriculum_store VALUES (15, "Choose Happy", 120, "Humanities", 11.11);
+SELECT * FROM curriculum_store;
+
+-- ANALYSIS--
+
+-- Question 1--
+-- What are the top 5 most expensive curriculums in the store?--
+SELECT Curriculum_Name, Price From curriculum_store
+WHERE Price > 25
+ORDER BY Price DESC
+LIMIT 5;
+
+--Question 2--
+-- What are the top 5 curriculums sold and how many did each sell? Be sure to include the content of each --
+SELECT Curriculum_Name, Content, Num_sold FROM curriculum_store
+ORDER BY Num_sold DESC
+LIMIT 5;
+
+--Question 3--
+-- What is the number of sales for the top 5 curriculums combined? --
+SELECT SUM(Num_sold) AS Top_5_Sales FROM curriculum_store;
+
+--Question 4--
+--What types of content does this curriculum store sell?--
+SELECT DISTINCT Content AS Content_types FROM curriculum_store;
+
+--Question 5--
+--What Math and Humanities curriculums does the store have? Be sure to include the price.--
+SELECT Curriculum_Name, Price FROM curriculum_store
+WHERE Content = "Math" OR Content = "Humanities";
+
+--Question 6--
+--What are the Top 3 math curriculums sold based on the sales? Be sure to include the price for each and the amount sold. List them in order of sales. 
+SELECT Curriculum_Name, Price, Num_sold FROM curriculum_store
+ORDER BY Num_sold DESC
+LIMIT 3;
+
+--Question 7--
+--What are the bottom 3 math curriculums sold based on the sales? Be sure to include the price for each and the amount sold. List them in order of most to least sales. 
+SELECT Curriculum_Name, Price, Num_sold FROM curriculum_store
+ORDER BY Num_sold ASC
+LIMIT 3;
+
+--Question 8--
+-- This customer is ordering "Chess 4 Life" "Pay to Play", and "Big Bang". Please ring up their total. 
+SELECT Curriculum_Name, Price FROM curriculum_store
+WHERE Curriculum_Name = "Chess 4 Life" OR 
+Curriculum_name = "Pay to Play" OR
+Curriculum_name = "Big Bang";
+SELECT SUM(Price) AS Order_Total FROM curriculum_store
+WHERE Curriculum_Name = "World Wars" OR 
+Curriculum_name = "The Weather Cycle" OR
+Curriculum_name = "Big Bang";
+
+--Question 9--
+-- List the history amd math curriculums by price highest to lowes. Incude the amount sold for each. t.--
+SELECT content, curriculum_name, price, Num_sold 
+FROM curriculum_store
+WHERE content = "History" OR
+Content = "Math"
+ORDER BY Price DESC;
+
+--Question 10--
+--Can you help this customer? She can't remember the name of the curriculum she's looking for but she knows there is a C in the title. Please print a list of the titles with a C in it. Include the Content, Name, and Price. --
+
+SELECT curriculum_name, content, price FROM curriculum_store
+WHERE curriculum_name LIKE '%C%'
+ORDER BY Curriculum_name;
