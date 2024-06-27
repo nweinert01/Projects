@@ -1,0 +1,97 @@
+-- SQL Project 2--
+-- Task: INNER JOIN 2 tables --
+
+CREATE TABLE curriculum_store (id INTEGER PRIMARY KEY, Curriculum_Name TEXT, Num_sold INTEGER, Content TEXT, Price INTEGER);
+
+INSERT INTO curriculum_store VALUES (1, "Big Bang", 17, "Science", 25.99);
+
+INSERT INTO curriculum_store VALUES (2, "Pay to Play", 25, "Math", 29.95);
+
+INSERT INTO curriculum_store VALUES (3, "Ready, Set, Read", 21, "Language Arts", 29.95);
+
+INSERT INTO curriculum_store VALUES (4, "World Wars", 13, "History", 32.75);
+
+INSERT INTO curriculum_store VALUES (5, "The Plant Life Cycle", 42, "Science", 19.95);
+
+INSERT INTO curriculum_store VALUES (6, "Everyday Fractions", 22, "Math", 25.99);
+
+INSERT INTO curriculum_store VALUES (7, "Dragon's Love Tacos", 36, "Language Arts", 22.25);
+
+INSERT INTO curriculum_store VALUES (8, "The Ten Commitments", 17, "Humanities", 12.75);
+
+INSERT INTO curriculum_store VALUES (9, "Grounding Techniques for Toddlers", 23, "Humanities", 12.75);
+
+INSERT INTO curriculum_store VALUES (10, "ABC in 123", 35, "Language Arts", 25.99);
+
+INSERT INTO curriculum_store VALUES (11, "The Weather Cycle", 28, "Science", 24.75);
+
+INSERT INTO curriculum_store VALUES (12, "Louisiana History", 44, "History", 25.99);
+
+INSERT INTO curriculum_store VALUES (13, "World Wins", 36, "History", 35.50);
+
+INSERT INTO curriculum_store VALUES (14, "Chess 4 Life", 73, "Language Arts", 27.74);
+
+INSERT INTO curriculum_store VALUES (15, "Choose Happy", 120, "Humanities", 11.11);
+
+CREATE TABLE Book_Details (book_id INTEGER, Pages INTEGER, Num_Lessons INTEGER, Interactive_Web TEXT, Projects TEXT);
+
+INSERT INTO Book_Details VALUES (1, 345, 27, "Yes", "Yes");
+INSERT INTO Book_Details VALUES (2, 452, 33, "No", "Yes");
+INSERT INTO Book_Details VALUES (3, 489, 30, "Yes", "No");
+INSERT INTO Book_Details VALUES (4, 285, 12, "No", "Yes");
+INSERT INTO Book_Details VALUES (5, 313, 9, "Yes", "Yes");
+INSERT INTO Book_Details VALUES (6, 243, 15, "Yes", "Yes");
+INSERT INTO Book_Details VALUES (7, 58, 7, "No", "Yes");
+INSERT INTO Book_Details VALUES (8, 138, 11, "No", "Yes");
+INSERT INTO Book_Details VALUES (9, 254, 14, "No", "No");
+INSERT INTO Book_Details VALUES (10, 320, 30, "Yes", "Yes");
+INSERT INTO Book_Details Values (11, 195, 10, "No", "Yes");
+INSERT INTO Book_Details VALUES(12, 330, 21, "No", "Yes");
+INSERT INTO Book_Details VALUES (13, 415, 40, "No", "Yes");
+INSERT INTO Book_Details VALUES (14, 275, 13, "Yes", "No");
+INSERT INTO Book_Details VALUES (15, 240, 15, "No", "Yes");
+
+-- ANALYSIS of DETAILS --
+
+--TASK 1--
+-- List the curriculums with an interactive web component in alphabetical order and include the price of each. --
+SELECT id, Curriculum_name, Interactive_Web, Price FROM Book_Details
+INNER JOIN curriculum_store
+    ON curriculum_store.id = book_details.book_id
+WHERE Interactive_Web = "Yes"
+ORDER BY Curriculum_name;
+
+--TASK 2--
+--List all curriculums based on sales highest to lowest--
+Select * FROM Curriculum_store
+INNER JOIN Book_Details
+    ON Curriculum_store.id = Book_Details.book_id
+ORDER BY Num_sold DESC;
+
+--TASK 3--
+--Which programs have a Web and Project component?--
+Select curriculum_name, content, price, Interactive_Web, projects FROM Curriculum_store
+INNER JOIN Book_Details
+    ON Curriculum_store.id = Book_Details.book_id
+WHERE Interactive_Web = "YES";
+
+--TASK 4--
+--Which History curriculum has the most lessons?--
+SELECT * FROM Curriculum_store 
+INNER JOIN Book_Details
+    ON curriculum_store.id = Book_details.book_id
+WHERE Content = "History"
+ORDER BY Num_lessons DESC
+LIMIT 1;
+
+--TASK 5--
+--Which language arts or math curriculums have a web component? Be sure to list them alphabetically.--
+SELECT Curriculum_Name, Content, Price, Interactive_Web FROM Curriculum_store 
+INNER JOIN Book_Details
+    ON curriculum_store.id = Book_details.book_id
+WHERE Content = "Math" 
+AND Interactive_Web = "Yes"
+OR Content = "Language Arts"
+AND Interactive_Web = "Yes"
+ORDER BY Curriculum_Name;
+
